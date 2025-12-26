@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fluenta – Learn Easily</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #FCE4EC;
+      text-align: center;
+    }
+    .screen {
+      padding: 25px;
+    }
+    .hidden {
+      display: none;
+    }
+    button {
+      background: #F2A6C2;
+      border: none;
+      color: white;
+      padding: 15px;
+      border-radius: 25px;
+      width: 90%;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+    input, select {
+      width: 90%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: none;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- LOADING -->
+<div id="loading" class="screen">
+  <h1>Fluenta</h1>
+  <p>Preparing your learning journey…</p>
+</div>
+
+<!-- SIGN UP -->
+<div id="signup" class="screen hidden">
+  <h2>Create your profile</h2>
+
+  <input placeholder="Full name">
+  <input placeholder="Username">
+
+  <select id="language">
+    <option value="">Choose language</option>
+    <option value="arabic">Arabic 🇸🇦</option>
+    <option value="english">English 🇬🇧</option>
+    <option value="spanish">Spanish 🇪🇸</option>
+    <option value="french">French 🇫🇷</option>
+    <option value="german">German 🇩🇪</option>
+  </select>
+
+  <button onclick="startLesson()">Start Learning</button>
+</div>
+
+<!-- LESSON -->
+<div id="lesson" class="screen hidden">
+  <h2 id="lessonTitle"></h2>
+  <div id="words"></div>
+  <button onclick="showQuiz()">Practice</button>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="screen hidden">
+  <h2>Quick Question</h2>
+  <p>What does “Hola” mean?</p>
+  <button onclick="correct()">Hello</button>
+  <button onclick="wrong()">Goodbye</button>
+</div>
+
+<!-- CERTIFICATE -->
+<div id="certificate" class="screen hidden">
+  <h2>🎓 Certificate of Completion</h2>
+  <p>Issued by Fluenta</p>
+  <p>You completed your first lesson!</p>
+</div>
+
+<script>
+  // LOADING
+  setTimeout(() => {
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("signup").classList.remove("hidden");
+  }, 2000);
+
+  const lessons = {
+    arabic: [
+      ["مرحبا", "Hello"],
+      ["شكرا", "Thank you"],
+      ["من فضلك", "Please"],
+      ["نعم", "Yes"],
+      ["لا", "No"],
+      ["كيف حالك؟", "How are you?"],
+      ["مع السلامة", "Goodbye"]
+    ],
+    english: [
+      ["Hello", "مرحبا"],
+      ["Thank you", "شكرا"],
+      ["Please", "من فضلك"],
+      ["Yes", "نعم"],
+      ["No", "لا"],
+      ["How are you?", "كيف حالك؟"],
+      ["Goodbye", "مع السلامة"]
+    ],
+    spanish: [
+      ["Hola", "Hello"],
+      ["Gracias", "Thank you"],
+      ["Por favor", "Please"],
+      ["Sí", "Yes"],
+      ["No", "No"],
+      ["¿Cómo estás?", "How are you?"],
+      ["Adiós", "Goodbye"]
+    ],
+    french: [
+      ["Bonjour", "Hello"],
+      ["Merci", "Thank you"],
+      ["S’il vous plaît", "Please"],
+      ["Oui", "Yes"],
+      ["Non", "No"],
+      ["Comment ça va?", "How are you?"],
+      ["Au revoir", "Goodbye"]
+    ],
+    german: [
+      ["Hallo", "Hello"],
+      ["Danke", "Thank you"],
+      ["Bitte", "Please"],
+      ["Ja", "Yes"],
+      ["Nein", "No"],
+      ["Wie geht’s?", "How are you?"],
+      ["Tschüss", "Goodbye"]
+    ]
+  };
+
+  function startLesson() {
+    const lang = document.getElementById("language").value;
+    if (!lang) {
+      alert("Choose a language");
+      return;
+    }
+
+    document.getElementById("signup").classList.add("hidden");
+    document.getElementById("lesson").classList.remove("hidden");
+    document.getElementById("lessonTitle").innerText = "Lesson – " + lang;
+
+    document.getElementById("words").innerHTML = "";
+    lessons[lang].forEach(w => {
+      document.getElementById("words").innerHTML +=
+        `<div class="card"><b>${w[0]}</b><br>${w[1]}</div>`;
+    });
+  }
+
+  function showQuiz() {
+    document.getElementById("lesson").classList.add("hidden");
+    document.getElementById("quiz").classList.remove("hidden");
+  }
+
+  function correct() {
+    document.getElementById("quiz").classList.add("hidden");
+    document.getElementById("certificate").classList.remove("hidden");
+  }
+
+  function wrong() {
+    alert("Almost! Hola means Hello 😊");
+  }
+</script>
+
+</body>
+</html>
